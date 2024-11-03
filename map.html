@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center align elements */
+            justify-content: flex-start; /* Align items to the start of the flex container */
+            height: 100vh; /* Full height of the viewport */
+            background-color: #2d333b; /* Dark background */
+            color: white; /* White text */
+        }
+
+        #map {
+            width: 100%; /* Full width */
+            height: 80vh; /* 80% of the viewport height for the map */
+            background-color: #cccccc; /* Light gray background for the map area */
+            margin-bottom: 20px; /* Space between the map and the button */
+        }
+
+        button {
+            background-color: #ffcc33; /* Button background color */
+            color: #2d333b; /* Button text color */
+            cursor: pointer; /* Change cursor on hover */
+            font-weight: bold; /* Bold text */
+            padding: 10px 20px; /* Padding inside the button */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+        }
+
+        button:hover {
+            background-color: #e6b800; /* Darker yellow on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div> <!-- Empty div for the map -->
+
+<button onclick="proceedBooking()">Proceed</button> <!-- Proceed button -->
+
+<script>
+    function proceedBooking() {
+        alert('Booking confirmed!'); // You can customize this message
+        // Here you can add additional logic for proceeding with the booking
+    }
+</script>
+
+</body>
+</html>

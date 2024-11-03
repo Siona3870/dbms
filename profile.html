@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Page styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+            background-color: #2d333b; /* Dark background color */
+            color: #ffffff; /* White text for main content */
+        }
+
+        /* Header styling */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #ffffff; /* White background for header */
+            color: #000000; /* Black text color */
+            align-items: center;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #000000; /* Black color for title text */
+        }
+
+        /* Profile content styling */
+        .profile-container {
+            text-align: left; /* Align text to the left */
+            margin-top: 50px; /* Adjust space for fixed header */
+            padding: 20px; /* Padding for the container */
+            max-width: 400px; /* Limit the maximum width */
+            width: 100%; /* Responsive width */
+        }
+
+        .profile-detail {
+            font-size: 20px;
+            margin-bottom: 15px; /* Space between details */
+        }
+
+        /* Button styling */
+        .action-button {
+            background-color: #ffcc33; /* Yellow button color */
+            color: #2d333b; /* Dark color for text */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            margin: 10px 5px; /* Add margin for spacing */
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #e6b800; /* Darker yellow on hover */
+        }
+
+        /* Positioning buttons lower */
+        .button-container {
+            margin-top: 40px; /* Increase space above buttons */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <div class="title">
+            &#128100; <!-- Unicode for a person icon -->
+            User Profile
+        </div>
+    </header>
+
+    <!-- Profile content -->
+    <div class="profile-container">
+        <p class="profile-detail">Name: John Doe</p>
+        <p class="profile-detail">Email: johndoe@example.com</p>
+        
+        <!-- Container for buttons -->
+        <div class="button-container">
+            <button class="action-button" onclick="editProfile()">Edit Profile</button>
+            <button class="action-button" onclick="viewActivity()">View Past Activity</button>
+        </div>
+    </div>
+
+    <script>
+        function editProfile() {
+            // Redirect to edit profile page
+            window.location.href = "edit-profile.html"; // Update this URL as needed
+        }
+
+        function viewActivity() {
+            // Redirect to past activity page
+            window.location.href = "past-activity.html"; // Update this URL as needed
+        }
+    </script>
+</body>
+</html>
+
+
