@@ -168,10 +168,7 @@ if (!empty($vehicles)) {
         ?>
     </div>
 
-    <form action="book_ride.php" method="POST">
-        <input type="hidden" id="selected-vehicle" name="vehicle">
-        <input type="submit" id="book-ride" value="Book Ride" disabled>
-    </form>
+    <button id="book-ride" disabled onclick="redirectToDetails()">Book Ride</button>
 </div>
 
 <script>
@@ -181,13 +178,20 @@ if (!empty($vehicles)) {
         buttons.forEach(btn => btn.style.outline = ''); // Remove outline from all buttons
         button.style.outline = '2px solid blue'; // Add outline to the selected vehicle
 
-        // Store the selected vehicle in the hidden input field
-        document.getElementById('selected-vehicle').value = button.textContent;
+        // Store the selected vehicle in the localStorage (you can also pass it via URL params)
+        localStorage.setItem('selectedVehicle', button.textContent);
 
         // Enable the Book Ride button
         document.getElementById('book-ride').disabled = false;
+    }
+
+    // Function to redirect to details.html
+    function redirectToDetails() {
+        // You can also pass the selected vehicle through URL if needed
+        window.location.href = "details.html?vehicle=" + encodeURIComponent(localStorage.getItem('selectedVehicle'));
     }
 </script>
 
 </body>
 </html>
+

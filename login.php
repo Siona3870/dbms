@@ -22,9 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_regenerate_id(true);
 
         // Store user data in session variables
-        $_SESSION['user_id'] = $user['user_id']; // Use correct column names
-        $_SESSION['user_name'] = $user['username']; 
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['user_name'] = $user['username'];
         $_SESSION['user_email'] = $user['email'];
+
+        // Initialize booking session variables
+        $_SESSION['pickup_location'] = '';
+        $_SESSION['drop_location'] = '';
+        $_SESSION['preferences'] = '';
+        $_SESSION['vehicle_selected'] = '';
+        $_SESSION['fare'] = 0;
+        $_SESSION['status'] = 'pending';
 
         // Redirect to the booking page
         header("Location: booking.php");
@@ -39,3 +47,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($conn);
 }
 ?>
+
