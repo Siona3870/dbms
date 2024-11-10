@@ -103,6 +103,8 @@
     <button onclick="bookCab()">Book Now</button>
 
     <script>
+        let pickupLat, pickupLng, dropoffLat, dropoffLng;
+
         function getSuggestions(query, suggestionsId) {
             const suggestionsContainer = document.getElementById(suggestionsId);
             suggestionsContainer.innerHTML = ''; // Clear previous suggestions
@@ -132,8 +134,18 @@
                         suggestionItem.className = 'suggestion-item';
                         suggestionItem.textContent = location.display_name;
                         suggestionItem.onclick = () => {
-                            document.getElementById(suggestionsId === 'pickupSuggestions' ? 'pickup' : 'dropoff').value = location.display_name;
+                            const selectedLocation = location;
+                            document.getElementById(suggestionsId === 'pickupSuggestions' ? 'pickup' : 'dropoff').value = selectedLocation.display_name;
                             suggestionsContainer.innerHTML = ''; // Clear suggestions after selection
+
+                            // Store coordinates for pickup or dropoff
+                            if (suggestionsId === 'pickupSuggestions') {
+                                pickupLat = selectedLocation.lat;
+                                pickupLng = selectedLocation.lon;
+                            } else {
+                                dropoffLat = selectedLocation.lat;
+                                dropoffLng = selectedLocation.lon;
+                            }
                         };
                         suggestionsContainer.appendChild(suggestionItem);
                     });
@@ -145,24 +157,14 @@
         }
 
         function bookCab() {
-            const pickup = document.getElementById('pickup').value;
-            const dropoff = document.getElementById('dropoff').value;
-            if (pickup === '' || dropoff === '') {
-                alert('Please enter both pickup and drop-off locations.');
+            if (!pickupLat || !pickupLng || !dropoffLat || !dropoffLng) {
+                alert('Please select both pickup and drop-off locations.');
                 return;
             }
             
-            // Redirect to the map page
-            window.location.href = `map.html?pickup=${encodeURIComponent(pickup)}&dropoff=${encodeURIComponent(dropoff)}`;
+            // Redirect to the map page with coordinates
+            window.location.href = `map.html?pickupLat=${pickupLat}&pickupLng=${pickupLng}&dropoffLat=${dropoffLat}&dropoffLng=${dropoffLng}`;
         }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
