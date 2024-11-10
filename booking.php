@@ -1,3 +1,13 @@
+<?php
+session_start(); // Start the session
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");  // Redirect to login if not logged in
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,11 +153,8 @@
 
         // Function to redirect to profile details page
         function goToProfile() {
-            window.location.href = "profile.html"; // Ensure this matches your profile details page filename
+            window.location.href = "profile.php"; // Updated to PHP for session management
         }
     </script>
 </body>
 </html>
-
-
-
