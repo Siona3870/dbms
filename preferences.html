@@ -85,48 +85,47 @@
             background-color: #31511E;
         }
     </style>
-</head>
+
 <body>
 
 <div class="header">Your journey, your rules. Choose your preferences!</div>
 
 <div class="container">
-    <div class="preference">
-        <label for="ac-temp">Air Conditioning:</label>
-        <select id="ac-temp" name="ac-temp">
-            <option value="off">Off</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-        </select>
-    </div>
+    <form action="save-preferences.php" method="POST"> <!-- Update form action to save preferences -->
+        <div class="preference">
+            <label for="ac-temp">Air Conditioning:</label>
+            <select id="ac-temp" name="ac-temp">
+                <option value="off">Off</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
 
-    <div class="preference">
-        <label for="silence">Silence/Chat Preference:</label>
-        <select id="silence" name="silence">
-            <option value="silence">Silence</option>
-            <option value="chat">Chat</option>
-        </select>
-    </div>
+        <div class="preference">
+            <label for="silence">Silence/Chat Preference:</label>
+            <select id="silence" name="silence">
+                <option value="silence">Silence</option>
+                <option value="chat">Chat</option>
+            </select>
+        </div>
 
-    <div class="preference">
-        <label for="wifi">Wi-Fi:</label>
-        <input type="checkbox" id="wifi" name="wifi">
-    </div>
+        <div class="preference">
+            <label for="wifi">Wi-Fi:</label>
+            <input type="checkbox" id="wifi" name="wifi">
+        </div>
 
-    <!-- New checkbox for music in car with Bluetooth -->
-    <div class="preference">
-        <label for="bluetooth-music">Would you like to play music via Bluetooth in the car?</label>
-        <input type="checkbox" id="bluetooth-music" name="bluetooth-music">
-    </div>
+        <!-- New checkbox for Bluetooth music -->
+        <div class="preference">
+            <label for="bluetooth-music">Would you like to play music via Bluetooth in the car?</label>
+            <input type="checkbox" id="bluetooth-music" name="bluetooth-music">
+        </div>
 
-    <div class="additional">
-        <label for="additional">Additional Requirements:</label>
-        <input type="text" id="additional" name="additional" placeholder="Type any additional requirements">
-    </div>
+        <div class="additional">
+            <label for="additional">Additional Requirements:</label>
+            <input type="text" id="additional" name="additional" placeholder="Type any additional requirements">
+        </div>
 
-    <!-- Form to submit preferences -->
-    <form id="preferences-form" action="vehicle.php" method="POST">
         <button type="submit">Submit Preferences</button>
     </form>
 </div>

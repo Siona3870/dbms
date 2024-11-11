@@ -119,33 +119,9 @@
       return baseFare + (perKmFare * distance) + (perMinFare * time);
     }
 
-    // Step 9: Handle booking action and send data to PHP
+    // Step 9: Handle booking action
     function proceedBooking() {
-      const price = calculatePrice(distance, duration); // Ensure price is calculated again when proceeding
-
-      // Sending price and other parameters to PHP via POST
-      const formData = new FormData();
-      formData.append('pickupLat', pickupLat);
-      formData.append('pickupLng', pickupLng);
-      formData.append('dropoffLat', dropoffLat);
-      formData.append('dropoffLng', dropoffLng);
-      formData.append('price', price.toFixed(2)); // Send the calculated price
-
-      fetch('update_fare.php', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = "preferences.html"; // Redirect to preferences page if successful
-        } else {
-          alert('Error updating fare: ' + data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Error sending fare to PHP:', error);
-      });
+      window.location.href = "preferences.html"; // Redirect to the preferences page
     }
   </script>
 </body>

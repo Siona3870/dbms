@@ -16,7 +16,7 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #3b3b3b; /* Dark background color */
@@ -26,6 +26,16 @@
 
         h1 {
             margin-top: 20px;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        /* Style for the buttons container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
         }
 
         button {
@@ -37,18 +47,31 @@
             border: none;
             border-radius: 4px;
             font-size: 16px;
-            margin-bottom: 30px;
+            transition: background-color 0.3s, color 0.3s;
+            width: 200px; /* Set width for both buttons */
         }
 
         button:hover {
             background-color: #31511E; /* Darker green on hover */
             color: #ffffff;
         }
+
+        /* Make Confirm Ride button bigger */
+        .confirm-btn {
+            font-size: 18px;
+            padding: 20px 40px; /* Larger padding for a bigger button */
+        }
     </style>
 </head>
 <body>
-    <h1></h1>
+    <h1>Confirm Ride?</h1>
 
-    <button onclick="window.location.href='onway.html'">Confirm</button>
+    <div class="button-container">
+        <!-- Confirm Ride button (larger) -->
+        <button class="confirm-btn" onclick="window.location.href='onway.php'">Confirm Ride</button>
+        <!-- Cancel Ride button -->
+        <button onclick="window.location.href='login.html'">Cancel Ride</button>
+    </div>
 </body>
 </html>
+

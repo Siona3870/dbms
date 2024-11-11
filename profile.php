@@ -1,18 +1,40 @@
 <?php
-session_start(); // Start the session
+session_start();
+include('db_connection.php'); // Include your DB connection
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");  // Redirect to login if not logged in
+    echo "<script>alert('Please log in to access this page'); window.location.href='login.php';</script>";
     exit();
 }
 
-// Retrieve user details from session
-$user_name = $_SESSION['user_name'];
-$user_email = $_SESSION['user_email'];
+// Get the user ID from session
+$user_id = $_SESSION['user_id'];
 
-// After setting the session variables
-//var_dump($_SESSION); // Uncomment for debugging if needed
+
+
+// Fetch the updated user details from the database
+$query = "SELECT username, email, mobile FROM users WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc(); // Fetch the updated user data
+    $user_name = $user['username'];  // Set the user name from the database
+    $user_email = $user['email']; // Set the user email from the database
+    $user_phone= $user['mobile']; 
+
+    
+} else {
+    echo "<script>alert('User not found'); window.location.href='login.php';</script>";
+    exit();
+}
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -105,23 +127,14 @@ $user_email = $_SESSION['user_email'];
 <div class="profile-container">
     <p class="profile-detail" id="user-name">Name: <?php echo $user_name; ?></p>
     <p class="profile-detail" id="user-email">Email: <?php echo $user_email; ?></p>
+    <p class="profile-detail" id="user-phone">Phone: <?php echo $user_phone; ?></p>
 
     <div class="button-container">
-        <button class="action-button" onclick="editProfile()">Edit Profile</button>
-        <button class="action-button" onclick="viewActivity()">View Past Activity</button>
+        <button onclick="window.location.href='edit-profile.php'"class="action-button" onclick="editProfile()">Edit Profile</button>
+        
     </div>
 </div>
 
-<script>
-    // Redirect functions for buttons
-    function editProfile() {
-        window.location.href = "edit-profile.php"; // Adjust to your edit profile page
-    }
-
-    function viewActivity() {
-        window.location.href = "past-activity.php"; // Adjust to your past activity page
-    }
-</script>
 
 </body>
 </html>
