@@ -87,7 +87,7 @@
 </head>
 <body>
     <h1>Book Your Cab</h1>
-    
+
     <div class="input-container">
         <label for="pickup">Pickup Location:</label>
         <input type="text" id="pickup" placeholder="Enter pickup location" oninput="getSuggestions(this.value, 'pickupSuggestions')">
@@ -103,27 +103,20 @@
     <button onclick="bookCab()">Book Now</button>
 
     <script>
+        let pickupLocation, dropoffLocation;
         let pickupLat, pickupLng, dropoffLat, dropoffLng;
 
         function getSuggestions(query, suggestionsId) {
             const suggestionsContainer = document.getElementById(suggestionsId);
-            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+            suggestionsContainer.innerHTML = '';
 
-            if (query.length < 3) {
-                return; // Only search if query length is 3 or more
-            }
+            if (query.length < 3) return;
 
-            // LocationIQ API URL
-            const token = "pk.00ab66b654bf58df9b322b671da7a38b"; // Replace with your actual token
+            const token = "pk.00ab66b654bf58df9b322b671da7a38b"; 
             const url = `https://us1.locationiq.com/v1/search.php?key=${token}&q=${encodeURIComponent(query + ', India')}&format=json&addressdetails=1&limit=5`;
 
             fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     if (data.length === 0) {
                         suggestionsContainer.innerHTML = '<div class="suggestion-item">No locations found</div>';
@@ -134,17 +127,17 @@
                         suggestionItem.className = 'suggestion-item';
                         suggestionItem.textContent = location.display_name;
                         suggestionItem.onclick = () => {
-                            const selectedLocation = location;
-                            document.getElementById(suggestionsId === 'pickupSuggestions' ? 'pickup' : 'dropoff').value = selectedLocation.display_name;
-                            suggestionsContainer.innerHTML = ''; // Clear suggestions after selection
+                            document.getElementById(suggestionsId === 'pickupSuggestions' ? 'pickup' : 'dropoff').value = location.display_name;
+                            suggestionsContainer.innerHTML = '';
 
-                            // Store coordinates for pickup or dropoff
                             if (suggestionsId === 'pickupSuggestions') {
-                                pickupLat = selectedLocation.lat;
-                                pickupLng = selectedLocation.lon;
+                                pickupLocation = location.display_name;
+                                pickupLat = location.lat;
+                                pickupLng = location.lon;
                             } else {
-                                dropoffLat = selectedLocation.lat;
-                                dropoffLng = selectedLocation.lon;
+                                dropoffLocation = location.display_name;
+                                dropoffLat = location.lat;
+                                dropoffLng = location.lon;
                             }
                         };
                         suggestionsContainer.appendChild(suggestionItem);
@@ -157,14 +150,42 @@
         }
 
         function bookCab() {
+            if (!pickupLocation || !dropoffLocation) {
+                alert('Please select both pickup and drop-off locations.');
+                return;
+            }
+
+            // Ensure that latitude and longitude are available
             if (!pickupLat || !pickupLng || !dropoffLat || !dropoffLng) {
                 alert('Please select both pickup and drop-off locations.');
                 return;
             }
-            
-            // Redirect to the map page with coordinates
-            window.location.href = `map.html?pickupLat=${pickupLat}&pickupLng=${pickupLng}&dropoffLat=${dropoffLat}&dropoffLng=${dropoffLng}`;
+
+            // Send the booking details to PHP for database insertion
+            fetch('book_cab.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pickupLocation: pickupLocation,
+                    dropoffLocation: dropoffLocation
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Redirect to map.html with coordinates after successful booking
+                    window.location.href = `map.html?pickupLat=${pickupLat}&pickupLng=${pickupLng}&dropoffLat=${dropoffLat}&dropoffLng=${dropoffLng}`;
+                } else {
+                    alert('Booking failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error booking cab:', error);
+            });
         }
+
     </script>
 </body>
 </html>

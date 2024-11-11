@@ -140,34 +140,32 @@
         }
 
         function bookCab() {
-            const pickup = document.getElementById('pickup').value;
-            const dropoff = document.getElementById('dropoff').value;
-            if (pickup === '' || dropoff === '') {
-                alert('Please enter both pickup and drop-off locations.');
-                return;
-            }
-            
-            // Save data to session via an AJAX request
-            fetch('save_booking.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ pickup, dropoff })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Redirect to the next page, such as map.html
-                    window.location.href = 'map.html';
-                } else {
-                    alert('Error saving booking information.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    const pickupLocation = document.getElementById('pickup').value;
+    const dropoffLocation = document.getElementById('dropoff').value;
+
+    fetch('book_cab.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            pickup_location: pickupLocation,
+            drop_location: dropoffLocation
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Booking information saved!');
+            // Redirect to map page or any other page as needed
+            window.location.href = `map.html?pickupLat=${pickupLat}&pickupLng=${pickupLng}&dropoffLat=${dropoffLat}&dropoffLng=${dropoffLng}`;
+        } else {
+            alert('Failed to save booking information. Please try again.');
         }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
     </script>
 </body>
 </html>
